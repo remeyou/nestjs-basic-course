@@ -6,15 +6,17 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 
 @Controller('coffees')
 export class CoffeesController {
   @Get()
-  findAll() {
+  findAll(@Query() paginationQuery) {
     // findAll(@Res() response) {
     // response.status(200).send('This action returns all coffees');
-    return 'This action returns all coffees';
+    const { limit, offset } = paginationQuery;
+    return `This action returns all coffees, Limit: ${limit}, offset: ${offset}`;
   }
 
   @Get(':id')
@@ -30,6 +32,7 @@ export class CoffeesController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() body) {
+    console.log('🚀 ~ update ~ body:', body);
     return `This action updates #${id} coffee`;
   }
 
